@@ -33,18 +33,18 @@
         a:hover { text-decoration: underline; }
     </style>
 </head>
-<body> 
+<body>
 
 <h1 id="tagName"></h1>
 <img id="tagPhoto" src="" alt="Tag photo not found">
 <a href="index.html">← Back to list</a>
 
 <script>
-    // Get the "name" parameter from URL
+    // Get the "name" parameter from the URL
     const params = new URLSearchParams(window.location.search);
     const name = params.get("name");
 
-    // Set the tag name
+    // Display the tag name
     document.getElementById("tagName").textContent = name;
 
     // Load the corresponding photo from /photos folder
