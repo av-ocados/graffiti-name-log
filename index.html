@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #ffffff; /* white background */
+            background: #ffffff;
             color: #111;
             padding: 50px 20px;
             text-align: center;
@@ -47,4 +47,27 @@
 
 <h1>Graffiti Name Log</h1>
 
-<input type="text" id="search" placehold
+<input type="text" id="search" placeholder="Search names...">
+
+<div class="name-list" id="names">
+    <a href="tag.html?name=FEASE">FEASE</a>
+    <a href="tag.html?name=HOPES">HOPES</a>
+    <a href="tag.html?name=PAYSO">PAYSO</a>
+</div>
+
+<script>
+    const searchInput = document.getElementById('search');
+    const namesList = document.getElementById('names');
+    const links = namesList.getElementsByTagName('a');
+
+    searchInput.addEventListener('keyup', function() {
+        const filter = searchInput.value.toUpperCase();
+        for (let i = 0; i < links.length; i++) {
+            const txtValue = links[i].textContent || links[i].innerText;
+            links[i].style.display = txtValue.toUpperCase().includes(filter) ? "" : "none";
+        }
+    });
+</script>
+
+</body>
+</html>
