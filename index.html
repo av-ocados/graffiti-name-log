@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Graffiti Name Log</title>
+    <title>Graffiti Tag</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,79 +14,41 @@
         h1 {
             font-weight: bold;
             font-size: 36px;
-            margin-bottom: 40px;
-        }
-        #search {
-            padding: 10px;
-            width: 250px;
-            font-size: 16px;
             margin-bottom: 30px;
         }
-        .name-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 400px;
-            margin: auto;
-        }
-        .name-list a {
-            text-decoration: none;
-            font-size: 24px;
-            color: #111;
-            padding: 10px;
-            border-radius: 6px;
+        img {
+            width: 90%;
+            max-width: 600px;
+            margin-top: 20px;
+            border-radius: 8px;
             border: 1px solid #ccc;
-            transition: background 0.3s;
         }
-        .name-list a:hover {
-            background: #eee;
+        a {
+            display: block;
+            margin-top: 40px;
+            text-decoration: none;
+            color: #111;
+            font-size: 18px;
         }
-        .highlight {
-            background-color: #fffa8c;
-        }
+        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
-<h1>Graffiti Name Log</h1>
-
-<input type="text" id="search" placeholder="Search names...">
-
-<div class="name-list" id="names">
-    <a href="tag.html?name=FEASE">FEASE</a>
-    <a href="tag.html?name=HOPES">HOPES</a>
-    <a href="tag.html?name=PAYSO">PAYSO</a>
-</div>
+<h1 id="tagName"></h1>
+<img id="tagPhoto" src="" alt="Tag photo not found">
+<a href="index.html">← Back to list</a>
 
 <script>
-    const searchInput = document.getElementById('search');
-    const namesList = document.getElementById('names');
+    // Get the "name" parameter from URL
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name");
 
-    // Sort links alphabetically on page load
-    const linksArray = Array.from(namesList.getElementsByTagName('a'));
-    linksArray.sort((a, b) => a.textContent.localeCompare(b.textContent));
-    linksArray.forEach(link => namesList.appendChild(link));
+    // Set the tag name
+    document.getElementById("tagName").textContent = name;
 
-    // Search and highlight functionality
-    searchInput.addEventListener('keyup', function() {
-        const filter = searchInput.value.toUpperCase();
-        const links = namesList.getElementsByTagName('a');
-        for (let i = 0; i < links.length; i++) {
-            const txtValue = links[i].textContent || links[i].innerText;
-            if(txtValue.toUpperCase().includes(filter) && filter !== "") {
-                links[i].style.display = "";
-                links[i].classList.add("highlight");
-            } else {
-                links[i].style.display = txtValue.toUpperCase().includes(filter) ? "" : "none";
-                links[i].classList.remove("highlight");
-            }
-        }
-        if(filter === "") {
-            for(let i = 0; i < links.length; i++){
-                links[i].classList.remove("highlight");
-            }
-        }
-    });
+    // Load the corresponding photo from /photos folder
+    document.getElementById("tagPhoto").src = "photos/" + name + ".jpg";
 </script>
 
 </body>
