@@ -41,22 +41,15 @@
             font-size: 20px;
             color: #111;
             text-align: center;
+            display: inline-block; /* ensures names appear in grid */
             transition: color 0.3s;
         }
         .name-grid a:hover {
             color: #555; /* subtle hover effect */
         }
         .highlight {
-            background-color: #fffa8c;
+            color: #ff0000; /* highlight changes text color instead of background */
+            font-weight: bold;
         }
     </style>
-</head>
-<body>
-
-<h1>Graffiti Name Log</h1>
-
-<input type="text" id="search" placeholder="Search names...">
-
-<div id="names-container"></div>
-
-<script>
+</hea
