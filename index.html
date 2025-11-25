@@ -9,36 +9,44 @@
             background: #ffffff;
             color: #111;
             padding: 50px 20px;
-            text-align: center;
         }
         h1 {
             font-weight: bold;
             font-size: 36px;
-            margin-bottom: 40px;
+            text-align: center;
+            margin-bottom: 30px;
         }
         #search {
+            display: block;
+            margin: 0 auto 40px auto;
             padding: 10px;
             width: 250px;
             font-size: 16px;
-            margin-bottom: 30px;
         }
-        .name-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 400px;
-            margin: auto;
+        .letter-group {
+            margin-bottom: 40px;
         }
-        .name-list a {
-            text-decoration: none;
+        .letter-header {
+            font-weight: bold;
             font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .name-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns per letter */
+            gap: 10px;
+        }
+        .name-grid a {
+            text-decoration: none;
+            font-size: 20px;
             color: #111;
-            padding: 10px;
-            border-radius: 6px;
+            padding: 8px;
             border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
             transition: background 0.3s;
         }
-        .name-list a:hover {
+        .name-grid a:hover {
             background: #eee;
         }
         .highlight {
@@ -52,40 +60,65 @@
 
 <input type="text" id="search" placeholder="Search names...">
 
-<div class="name-list" id="names">
-    <a href="tag.html?name=FEASE">FEASE</a>
-    <a href="tag.html?name=HOPES">HOPES</a>
-    <a href="tag.html?name=PAYSO">PAYSO</a>
-</div>
+<div id="names-container"></div>
 
 <script>
-    const searchInput = document.getElementById('search');
-    const namesList = document.getElementById('names');
+    // Your current names
+    const names = ["FEASE", "HOPES", "PAYSO"];
 
-    // Sort links alphabetically on page load
-    const linksArray = Array.from(namesList.getElementsByTagName('a'));
-    linksArray.sort((a, b) => a.textContent.localeCompare(b.textContent));
-    linksArray.forEach(link => namesList.appendChild(link));
+    // Group names by first letter
+    const grouped = {};
+    names.forEach(name => {
+        const letter = name[0].toUpperCase();
+        if (!grouped[letter]) grouped[letter] = [];
+        grouped[letter].push(name);
+    });
+
+    // Sort letters alphabetically
+    const letters = Object.keys(grouped).sort();
+
+    const container = document.getElementById('names-container');
+
+    letters.forEach(letter => {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = "letter-group";
+
+        // Letter header
+        const header = document.createElement('div');
+        header.className = "letter-header";
+        header.textContent = letter;
+        groupDiv.appendChild(header);
+
+        // Grid of names (3 columns)
+        const grid = document.createElement('div');
+        grid.className = "name-grid";
+
+        grouped[letter].sort().forEach(name => {
+            const link = document.createElement('a');
+            link.href = "tag.html?name=" + name;
+            link.textContent = name;
+            grid.appendChild(link);
+        });
+
+        groupDiv.appendChild(grid);
+        container.appendChild(groupDiv);
+    });
 
     // Search and highlight functionality
+    const searchInput = document.getElementById('search');
     searchInput.addEventListener('keyup', function() {
         const filter = searchInput.value.toUpperCase();
-        const links = namesList.getElementsByTagName('a');
-        for (let i = 0; i < links.length; i++) {
-            const txtValue = links[i].textContent || links[i].innerText;
-            if(txtValue.toUpperCase().includes(filter) && filter !== "") {
-                links[i].style.display = "";
-                links[i].classList.add("highlight");
+        const allLinks = document.querySelectorAll('.name-grid a');
+        allLinks.forEach(link => {
+            if (link.textContent.toUpperCase().includes(filter) && filter !== "") {
+                link.style.display = "";
+                link.classList.add("highlight");
             } else {
-                links[i].style.display = txtValue.toUpperCase().includes(filter) ? "" : "none";
-                links[i].classList.remove("highlight");
+                link.style.display = link.textContent.toUpperCase().includes(filter) ? "" : "none";
+                link.classList.remove("highlight");
             }
-        }
-        if(filter === "") {
-            for(let i = 0; i < links.length; i++){
-                links[i].classList.remove("highlight");
-            }
-        }
+            if(filter === "") link.classList.remove("highlight");
+        });
     });
 </script>
 
