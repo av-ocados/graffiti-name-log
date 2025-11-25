@@ -61,10 +61,16 @@
 <script>
     const searchInput = document.getElementById('search');
     const namesList = document.getElementById('names');
-    const links = namesList.getElementsByTagName('a');
 
+    // Sort links alphabetically on page load
+    const linksArray = Array.from(namesList.getElementsByTagName('a'));
+    linksArray.sort((a, b) => a.textContent.localeCompare(b.textContent));
+    linksArray.forEach(link => namesList.appendChild(link));
+
+    // Search and highlight functionality
     searchInput.addEventListener('keyup', function() {
         const filter = searchInput.value.toUpperCase();
+        const links = namesList.getElementsByTagName('a');
         for (let i = 0; i < links.length; i++) {
             const txtValue = links[i].textContent || links[i].innerText;
             if(txtValue.toUpperCase().includes(filter) && filter !== "") {
@@ -75,7 +81,6 @@
                 links[i].classList.remove("highlight");
             }
         }
-        // Remove highlight if input is empty
         if(filter === "") {
             for(let i = 0; i < links.length; i++){
                 links[i].classList.remove("highlight");
