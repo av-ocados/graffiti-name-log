@@ -6,27 +6,45 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #111;
-            color: white;
-            margin: 0;
-            padding: 20px;
+            background: #ffffff; /* white background */
+            color: #111;
+            padding: 50px 20px;
+            text-align: center;
         }
-        h1 { text-align: center; }
+        h1 {
+            font-weight: bold;
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+        #search {
+            padding: 10px;
+            width: 250px;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
         .name-list {
-            max-width: 600px;
-            margin: auto;
             display: flex;
             flex-direction: column;
             gap: 15px;
+            max-width: 400px;
+            margin: auto;
         }
-        a {
-            background: #222;
-            padding: 15px;
+        .name-list a {
             text-decoration: none;
-            color: white;
-            font-size: 22px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid #444;
+            font-size: 24px;
+            color: #111;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            transition: background 0.3s;
         }
-        a:hover { background
+        .name-list a:hover {
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Graffiti Name Log</h1>
+
+<input type="text" id="search" placehold
