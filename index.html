@@ -33,7 +33,7 @@
         }
         .name-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 columns per letter */
+            grid-template-columns: repeat(3, 1fr); /* 3 columns default */
             gap: 10px;
         }
         .name-grid a {
@@ -41,15 +41,95 @@
             font-size: 20px;
             color: #111;
             text-align: center;
-            display: inline-block; /* ensures names appear in grid */
             transition: color 0.3s;
         }
         .name-grid a:hover {
-            color: #555; /* subtle hover effect */
+            color: #555;
         }
         .highlight {
-            color: #ff0000; /* highlight changes text color instead of background */
+            color: #ff0000;
             font-weight: bold;
         }
+
+        /* Responsive columns */
+        @media (max-width: 900px) {
+            .name-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+            }
+        }
+        @media (max-width: 600px) {
+            .name-grid {
+                grid-template-columns: 1fr; /* 1 column on small screens */
+            }
+        }
     </style>
-</hea
+</head>
+<body>
+
+<h1>Graffiti Name Log</h1>
+
+<input type="text" id="search" placeholder="Search names...">
+
+<div id="names-container"></div>
+
+<script>
+    const names = ["FEASE", "HOPES", "PAYSO"]; // Your current names
+
+    // Group names by first letter
+    const grouped = {};
+    names.forEach(name => {
+        const letter = name[0].toUpperCase();
+        if (!grouped[letter]) grouped[letter] = [];
+        grouped[letter].push(name);
+    });
+
+    // Sort letters alphabetically
+    const letters = Object.keys(grouped).sort();
+
+    const container = document.getElementById('names-container');
+
+    letters.forEach(letter => {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = "letter-group";
+
+        // Letter header
+        const header = document.createElement('div');
+        header.className = "letter-header";
+        header.textContent = letter;
+        groupDiv.appendChild(header);
+
+        // Grid of names (3 columns default)
+        const grid = document.createElement('div');
+        grid.className = "name-grid";
+
+        grouped[letter].sort().forEach(name => {
+            const link = document.createElement('a');
+            link.href = "tag.html?name=" + name;
+            link.textContent = name;
+            grid.appendChild(link);
+        });
+
+        groupDiv.appendChild(grid);
+        container.appendChild(groupDiv);
+    });
+
+    // Search and highlight
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('keyup', function() {
+        const filter = searchInput.value.toUpperCase();
+        const allLinks = document.querySelectorAll('.name-grid a');
+        allLinks.forEach(link => {
+            if(link.textContent.toUpperCase().includes(filter) && filter !== "") {
+                link.style.display = "";
+                link.classList.add("highlight");
+            } else {
+                link.style.display = link.textContent.toUpperCase().includes(filter) ? "" : "none";
+                link.classList.remove("highlight");
+            }
+            if(filter === "") link.classList.remove("highlight");
+        });
+    });
+</script>
+
+</body>
+</html>
