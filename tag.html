@@ -8,35 +8,47 @@
             font-family: Arial, sans-serif;
             background: #ffffff;
             color: #111;
-            padding: 50px 20px;
+            padding: 20px;
             text-align: center;
         }
         h1 {
             font-weight: bold;
             font-size: 36px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            word-break: break-word;
         }
         img {
             width: 90%;
             max-width: 600px;
+            height: auto;
             margin-top: 20px;
             border-radius: 8px;
-            border: 1px solid #ccc;
         }
         a {
-            display: block;
-            margin-top: 40px;
+            display: inline-block;
+            margin-top: 30px;
             text-decoration: none;
             color: #111;
             font-size: 18px;
         }
         a:hover { text-decoration: underline; }
+
+        /* Responsive text and image */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 28px;
+            }
+            img {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
 
 <h1 id="tagName"></h1>
 <img id="tagPhoto" src="" alt="Tag photo not found">
+<br>
 <a href="index.html">← Back to list</a>
 
 <script>
