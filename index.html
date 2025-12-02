@@ -158,9 +158,16 @@
         // Add more names here
     ];
 
-    /* Stats */
+    /* Stats: names logged + last updated date */
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+    });
+
     document.getElementById("stats").textContent =
-        names.length + " names logged";
+        `${names.length} names logged · Last updated: ${formattedDate}`;
 
     /* Name of the Day */
     const dayIndex = Math.floor((Date.now() / 86400000) % names.length);
@@ -217,7 +224,7 @@
         window.location.href = "tag.html?name=" + random;
     });
 
-    /* Search + highlight */
+    /* Search + highlight + hide empty groups */
     const searchInput = document.getElementById('search');
     searchInput.addEventListener('keyup', function() {
         const filter = searchInput.value.toUpperCase();
